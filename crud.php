@@ -103,20 +103,83 @@ function login()
 
 
 
-//ADDPOST:
 
-function addpost($nom, $userid)
-{
+
+                                            //ADDPOST:
+
+function addpost(){
+    
+    function createDirectoryIfNotExists($path) {
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
+    }
+}
+
+if (!empty($_POST['nom']) && !empty($_POST['description']) && isset($_FILES['files'])) {
     $db = connect();
-    $sql = "INSERT INTO group (nom,userid) VALUES (:nom,:userid)";
+    $userid = $_SESSION['id'] ?? 0;
+
+    // Nom du dossier principal
+    $modelName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $_POST['nom']); 
+    $baseUploadDir = __DIR__ . '/uploads/' . $modelName . '_' . $userid . '/';
+
+    // **Vérifier si le dossier existe déjà**
+    if (file_exists($baseUploadDir)) {
+        $erreur = "<p style='color:red;'>Erreur : un modèle nommé <strong>$modelName</strong> existe déjà pour cet utilisateur.</p>";
+        $retour =  "<a href='index.php'>Retour</a>";
+        exit;
+    }
+
+    // Créer le dossier principal
+    createDirectoryIfNotExists($baseUploadDir);
+
+    $uploadedFiles = [];
+    foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
+        if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK) {
+            $relativePath = $_FILES['files']['name'][$key];
+            $targetPath = $baseUploadDir . $relativePath;
+
+            // Créer sous-dossiers si nécessaires
+            $directory = dirname($targetPath);
+            createDirectoryIfNotExists($directory);
+
+            if (move_uploaded_file($tmp_name, $targetPath)) {
+                $uploadedFiles[] = $relativePath;
+            } else {
+                echo "Erreur lors de l'upload de $relativePath.<br>";
+            }
+        }
+    }
+
+    // Sauvegarde en BDD
+    $filesJson = json_encode($uploadedFiles);
+    $sql = "INSERT INTO post (nom, description, files, userid)
+            VALUES (:nom, :description, :files, :userid)";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         'nom' => $_POST['nom'],
-        'userid' => $_SESSION['id']
+        'description' => $_POST['description'],
+        'files' => $filesJson,
+        'userid' => $userid
     ]);
+
+    $sent =  "<p>Upload terminé</p>";
+    $acceuil = "<a href='index.php'>Retour</a>";
+    exit;
+} else {
+    $incomplet = "Formulaire incomplet ou aucun fichier envoyé.";
 }
 
-//FIN ADD POST
+
+
+}
+
+                                            //FIN ADD POST
+
+
+
+
+
 
 //CREATE GROUPE :
 
