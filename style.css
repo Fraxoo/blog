@@ -75,6 +75,10 @@ body{
     font-size: 1.3rem;
 }
 
+.hautdroite a:hover{
+    color: #407c91;
+}
+
 .hautdroite input{
     border-radius: 3rem;
     background-color: #f2f2f2;

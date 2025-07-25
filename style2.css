@@ -1,0 +1,116 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+body{
+    width: 100%;
+    background-color: #94e4ff;
+    height: 100%;
+    
+}
+
+.haut{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0px 0px 5px gray;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
+    text-align: center;
+    background-color: white;
+}
+
+.hautmid{
+    padding: 1.5rem;
+}
+
+.hautmid a{
+    font-size: 3rem;
+    text-decoration: none;
+    color: rgb(52, 146, 165);
+}
+
+.hautmid a:hover{
+    color: rgb(68, 118, 129);
+}
+
+.all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+}
+
+.formulaire{
+    background: #0293FD;
+    background: linear-gradient(145deg,rgba(2, 147, 253, 1) 0%, rgba(28, 202, 254, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    border-radius: 3rem;
+    gap: 1rem;
+    
+}
+
+.formulaire img{
+    width: 2.2rem;
+    margin-right: 1rem;
+}
+
+.password,.email{
+    display: flex;
+    align-items: center;
+    border-bottom: 2px white solid;
+    padding: 1rem;
+    
+}
+
+.formulaire input{
+    width: 75%;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4rem;
+    outline: none;
+}
+
+.erreur{
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.done{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 17%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+button{
+    background: none;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    
+    font-size: 1.7rem;
+}
+
+.register{
+    text-align: center;
+}
+
