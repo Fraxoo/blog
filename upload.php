@@ -55,6 +55,7 @@ addpost();
                         <p>*Preview :</p>
                         <input type="file" class="file" name="preview" required>
                     </div>
+                    <?= $debut = "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";?>
                         <button type="submit">Upload</button>
                 </form>
 

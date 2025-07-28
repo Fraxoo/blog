@@ -103,7 +103,7 @@ h2{
     margin: 5rem;
     flex-wrap: wrap;
     width: fit-content;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .post{
@@ -122,7 +122,7 @@ h2{
     box-shadow: 0px 1px 3px rgb(0, 213, 255);
 }
 
-.post a{
+.feed a{
     text-decoration: none;
     color: black;
 }

@@ -119,7 +119,6 @@ function addpost() {
     // Extensions autorisées pour les fichiers principaux
     $allowedFileExtensions = ['zip', 'obj', 'fbx', 'glb', 'gltf', 'bin', 'jpg', 'png', 'txt', 'pdf'];
 
-
     if (!empty($_POST['nom']) && !empty($_POST['description']) && isset($_FILES['files'])) {
         $db = connect();
         $userid = $_SESSION['id'] ?? 0;
@@ -135,16 +134,17 @@ function addpost() {
             return;
         }
 
-        // Créer le dossier principal
+        // Créer le dossier principal et textures
         createDirectoryIfNotExists($baseUploadDir);
+        createDirectoryIfNotExists($baseUploadDir . 'textures/');
 
         // ====== 1. Upload des fichiers ======
         $uploadedFiles = [];
         foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
             if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK) {
+                // Nom du fichier
                 $fileName = basename($_FILES['files']['name'][$key]);
-                $fileName = preg_replace('/[^a-zA-Z0-9._-]/', '_', $fileName); // Sécurise le nom
-                $targetPath = $baseUploadDir . $fileName;
+                $fileName = preg_replace('/[^a-zA-Z0-9._-]/', '_', $fileName);
 
                 // Vérification de l'extension
                 $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
@@ -153,34 +153,38 @@ function addpost() {
                     continue;
                 }
 
+                // Si c'est une image (sauf preview), la placer dans /textures
+                $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                $targetPath = $isImage ? $baseUploadDir . 'textures/' . $fileName : $baseUploadDir . $fileName;
+
+                // Déplacement
                 if (move_uploaded_file($tmp_name, $targetPath)) {
-                    $uploadedFiles[] = $fileName;
+                    $uploadedFiles[] = $isImage ? 'textures/' . $fileName : $fileName;
                 } else {
                     echo "<p style='color:red;'>Erreur lors de l'upload de $fileName.</p>";
                 }
             }
         }
 
-       
         // ====== 2. Upload de la preview ======
-$preview = null;
-if (isset($_FILES['preview']) && $_FILES['preview']['error'] === UPLOAD_ERR_OK) {
-    $extPreview = strtolower(pathinfo($_FILES['preview']['name'], PATHINFO_EXTENSION));
+        $preview = null;
+        if (isset($_FILES['preview']) && $_FILES['preview']['error'] === UPLOAD_ERR_OK) {
+            $extPreview = strtolower(pathinfo($_FILES['preview']['name'], PATHINFO_EXTENSION));
 
-    if (in_array($extPreview, $allowedPreviewExtensions)) {
-        // Nom forcé : preview.extension
-        $previewName = 'preview.' . $extPreview;
-        $previewPath = $baseUploadDir . $previewName;
+            if (in_array($extPreview, $allowedPreviewExtensions)) {
+                // Nom forcé : preview.extension
+                $previewName = 'preview.' . $extPreview;
+                $previewPath = $baseUploadDir . $previewName;
 
-        if (move_uploaded_file($_FILES['preview']['tmp_name'], $previewPath)) {
-            $preview = $previewName;
-        } else {
-            echo "<p style='color:red;'>Erreur lors de l'upload de l'image de preview.</p>";
+                if (move_uploaded_file($_FILES['preview']['tmp_name'], $previewPath)) {
+                    $preview = $previewName;
+                } else {
+                    echo "<p style='color:red;'>Erreur lors de l'upload de l'image de preview.</p>";
+                }
+            } else {
+                echo "<p style='color:red;'>Extension de la preview non autorisée.</p>";
+            }
         }
-    } else {
-        echo "<p style='color:red;'>Extension de la preview non autorisée.</p>";
-    }
-}
 
         // ====== 3. Sauvegarde en BDD ======
         try {
@@ -203,9 +207,10 @@ if (isset($_FILES['preview']) && $_FILES['preview']['error'] === UPLOAD_ERR_OK) 
         }
 
     } else {
-        echo "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
+        $debut = "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
     }
 }
+
 
 
                                             //FIN ADD POST

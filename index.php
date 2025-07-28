@@ -6,7 +6,7 @@ require_once('crud.php');
 
 $bdd = connect();
 
-$get = $bdd->prepare('SELECT * FROM post INNER JOIN user ON post.userid = user.id');
+$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid');
 $get->execute();
 $posts = $get->fetchAll();
 
@@ -38,14 +38,14 @@ $posts = $get->fetchAll();
             </div>
             <div class="hautdroite">
 
-                    <input type="search">
-                    <button><img src="images/search(1).png"></button>
+                <input type="search">
+                <button><img src="images/search(1).png"></button>
 
-                    <a href="upload.php">UPLOAD</a>
+                <a href="upload.php">UPLOAD</a>
                 <?php if (!isset($_SESSION['id'])): ?>
                     <a href="login.php">Se Connecter</a>
                 <?php else : ?>
-                    <a href="logout.php">Se Deconnecter</a>
+                    <a href="account.php">Mon Compte</a>
                 <?php endif ?>
             </div>
         </div>
@@ -55,26 +55,27 @@ $posts = $get->fetchAll();
 
     <main>
 
-        
-            <h2>Maquette 3D public deja disponible :</h2>
-        
+
+        <h2>Maquette 3D public deja disponible :</h2>
+
 
         <div class="feed">
 
-            <?php foreach($posts as $post):?>
-
-                <div class="post">
-                    <a href="post.php?id=<?= $post['id']?>">
-                    <img src="uploads/<?php echo $post['nom']?>_<?php echo $post['userid']?>/preview.jpg" alt="">
-                    <p><?= $post['nom'] ?></p>
-                    <p>Auteur : <?= $post['pseudo'] ?></p>
-                    </a>
-                    
+            <?php foreach ($posts as $post): ?>
+                <a href="post.php?id=<?php echo $post['id'] ?>">
+                    <div class="post">
                         
-                </div>
 
+                        <img src="uploads/<?php echo $post['nom'] ?>_<?php echo $post['userid'] ?>/preview.png" alt="">
+                        <p><?= $post['nom'] ?></p>
+                        <p>Auteur : <?= $post['pseudo'] ?></p>
+
+
+
+                    </div>
+                </a>
             <?php endforeach ?>
-        
+
         </div>
 
     </main>
