@@ -107,72 +107,106 @@ function login()
 
                                             //ADDPOST:
 
-function addpost(){
-    
+function addpost() {
     function createDirectoryIfNotExists($path) {
-    if (!file_exists($path)) {
-        mkdir($path, 0777, true);
-    }
-}
-
-if (!empty($_POST['nom']) && !empty($_POST['description']) && isset($_FILES['files'])) {
-    $db = connect();
-    $userid = $_SESSION['id'] ?? 0;
-
-    // Nom du dossier principal
-    $modelName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $_POST['nom']); 
-    $baseUploadDir = __DIR__ . '/uploads/' . $modelName . '_' . $userid . '/';
-
-    // **Vérifier si le dossier existe déjà**
-    if (file_exists($baseUploadDir)) {
-        $erreur = "<p style='color:red;'>Erreur : un modèle nommé <strong>$modelName</strong> existe déjà pour cet utilisateur.</p>";
-        $retour =  "<a href='index.php'>Retour</a>";
-        exit;
-    }
-
-    // Créer le dossier principal
-    createDirectoryIfNotExists($baseUploadDir);
-
-    $uploadedFiles = [];
-    foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
-        if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK) {
-            $relativePath = $_FILES['files']['name'][$key];
-            $targetPath = $baseUploadDir . $relativePath;
-
-            // Créer sous-dossiers si nécessaires
-            $directory = dirname($targetPath);
-            createDirectoryIfNotExists($directory);
-
-            if (move_uploaded_file($tmp_name, $targetPath)) {
-                $uploadedFiles[] = $relativePath;
-            } else {
-                echo "Erreur lors de l'upload de $relativePath.<br>";
-            }
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
         }
     }
 
-    // Sauvegarde en BDD
-    $filesJson = json_encode($uploadedFiles);
-    $sql = "INSERT INTO post (nom, description, files, userid)
-            VALUES (:nom, :description, :files, :userid)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([
-        'nom' => $_POST['nom'],
-        'description' => $_POST['description'],
-        'files' => $filesJson,
-        'userid' => $userid
-    ]);
+    // Extensions autorisées pour la preview
+    $allowedPreviewExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    // Extensions autorisées pour les fichiers principaux
+    $allowedFileExtensions = ['zip', 'obj', 'fbx', 'glb', 'gltf', 'bin', 'jpg', 'png', 'txt', 'pdf'];
 
-    $sent =  "<p>Upload terminé</p>";
-    $acceuil = "<a href='index.php'>Retour</a>";
-    exit;
-} else {
-    $incomplet = "Formulaire incomplet ou aucun fichier envoyé.";
+
+    if (!empty($_POST['nom']) && !empty($_POST['description']) && isset($_FILES['files'])) {
+        $db = connect();
+        $userid = $_SESSION['id'] ?? 0;
+
+        // Nom du modèle (sécurisé)
+        $modelName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $_POST['nom']);
+        $baseUploadDir = __DIR__ . '/uploads/' . $modelName . '_' . $userid . '/';
+
+        // Vérifier si le dossier existe déjà
+        if (file_exists($baseUploadDir)) {
+            echo "<p style='color:red;'>Erreur : un modèle nommé <strong>$modelName</strong> existe déjà pour cet utilisateur.</p>";
+            echo "<a href='index.php'>Retour</a>";
+            return;
+        }
+
+        // Créer le dossier principal
+        createDirectoryIfNotExists($baseUploadDir);
+
+        // ====== 1. Upload des fichiers ======
+        $uploadedFiles = [];
+        foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
+            if ($_FILES['files']['error'][$key] === UPLOAD_ERR_OK) {
+                $fileName = basename($_FILES['files']['name'][$key]);
+                $fileName = preg_replace('/[^a-zA-Z0-9._-]/', '_', $fileName); // Sécurise le nom
+                $targetPath = $baseUploadDir . $fileName;
+
+                // Vérification de l'extension
+                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                if (!in_array($ext, $allowedFileExtensions)) {
+                    echo "<p style='color:red;'>Extension de fichier non autorisée : $fileName</p>";
+                    continue;
+                }
+
+                if (move_uploaded_file($tmp_name, $targetPath)) {
+                    $uploadedFiles[] = $fileName;
+                } else {
+                    echo "<p style='color:red;'>Erreur lors de l'upload de $fileName.</p>";
+                }
+            }
+        }
+
+       
+        // ====== 2. Upload de la preview ======
+$preview = null;
+if (isset($_FILES['preview']) && $_FILES['preview']['error'] === UPLOAD_ERR_OK) {
+    $extPreview = strtolower(pathinfo($_FILES['preview']['name'], PATHINFO_EXTENSION));
+
+    if (in_array($extPreview, $allowedPreviewExtensions)) {
+        // Nom forcé : preview.extension
+        $previewName = 'preview.' . $extPreview;
+        $previewPath = $baseUploadDir . $previewName;
+
+        if (move_uploaded_file($_FILES['preview']['tmp_name'], $previewPath)) {
+            $preview = $previewName;
+        } else {
+            echo "<p style='color:red;'>Erreur lors de l'upload de l'image de preview.</p>";
+        }
+    } else {
+        echo "<p style='color:red;'>Extension de la preview non autorisée.</p>";
+    }
 }
 
+        // ====== 3. Sauvegarde en BDD ======
+        try {
+            $filesJson = json_encode($uploadedFiles);
+            $sql = "INSERT INTO post (nom, description, files, preview, userid)
+                    VALUES (:nom, :description, :files, :preview, :userid)";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                'nom' => $_POST['nom'],
+                'description' => $_POST['description'],
+                'files' => $filesJson,
+                'preview' => $preview,
+                'userid' => $userid
+            ]);
 
+            echo "<p style='color:green;'>Upload terminé avec succès !</p>";
+            echo "<a href='index.php'>Retour</a>";
+        } catch (PDOException $e) {
+            echo "<p style='color:red;'>Erreur lors de l'enregistrement en base de données : " . htmlspecialchars($e->getMessage()) . "</p>";
+        }
 
+    } else {
+        echo "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
+    }
 }
+
 
                                             //FIN ADD POST
 
@@ -239,3 +273,11 @@ function update($id, $nom, $type, $calories)
         'calories' => $calories
     ]);
 }
+
+
+
+
+
+
+
+

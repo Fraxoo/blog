@@ -4,6 +4,11 @@ session_start();
 
 require_once('crud.php');
 
+$bdd = connect();
+
+$get = $bdd->prepare('SELECT * FROM post INNER JOIN user ON post.userid = user.id');
+$get->execute();
+$posts = $get->fetchAll();
 
 
 ?>
@@ -50,8 +55,26 @@ require_once('crud.php');
 
     <main>
 
-        <div class="title">
+        
             <h2>Maquette 3D public deja disponible :</h2>
+        
+
+        <div class="feed">
+
+            <?php foreach($posts as $post):?>
+
+                <div class="post">
+                    <a href="post.php?id=<?= $post['id']?>">
+                    <img src="uploads/<?php echo $post['nom']?>_<?php echo $post['userid']?>/preview.jpg" alt="">
+                    <p><?= $post['nom'] ?></p>
+                    <p>Auteur : <?= $post['pseudo'] ?></p>
+                    </a>
+                    
+                        
+                </div>
+
+            <?php endforeach ?>
+        
         </div>
 
     </main>

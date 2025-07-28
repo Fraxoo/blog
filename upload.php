@@ -43,10 +43,19 @@ addpost();
             <div class="upload">
 
                 <form action="upload.php" method="post" enctype="multipart/form-data">
-                    <input type="text" class="nom" name="nom" placeholder="Nom :" required>
-                    <input type="text" name="description" class="description" placeholder="Description" required>
-                    <input type="file" class="file" name="files[]" webkitdirectory directory multiple required>
-                    <button type="submit">Upload</button>
+                    <div class="info">
+                        <input type="text" class="nom" name="nom" placeholder="Nom :" required>
+                        <input type="text" name="description" class="description" placeholder="Description" required>
+                    </div>
+                    <div class="model">
+                        <p>*Model 3D :</p>
+                        <input type="file" class="file" name="files[]" webkitdirectory directory multiple required>
+                    </div>
+                    <div class="model">
+                        <p>*Preview :</p>
+                        <input type="file" class="file" name="preview" required>
+                    </div>
+                        <button type="submit">Upload</button>
                 </form>
 
             </div>
