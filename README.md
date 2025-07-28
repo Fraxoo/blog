@@ -28,5 +28,7 @@ option pour ajouter en favoris
 
 option pour laisser un commentaire 
 
+option changer adresse mail mot de passe
+
 
 

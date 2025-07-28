@@ -6,6 +6,16 @@ require_once('crud.php');
 
 $bdd = connect();
 
+$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid');
+$get->execute();
+$posts = $get->fetchAll();
+
+$product = getById();
+
+echo "uploads/".$product['nom'].'_'.$product['userid']
+
+
+
 
 
 ?>
@@ -26,7 +36,7 @@ $bdd = connect();
 
 <body>
 
-   <header>
+    <header>
 
         <div class="haut">
 
@@ -37,6 +47,29 @@ $bdd = connect();
         </div>
 
     </header>
+
+    <main>
+
+        <div class="all">
+            <h2><?= $_SESSION['pseudo'] ?></h2>
+            <p>Mes model en ligne :</p>
+
+            <?php foreach ($posts as $post): ?>
+
+                <p><?= $post['nom']?></p>
+                <p><?= $post['id']?></p>
+                <a href="removeproduct.php?id=<?= $post['id']?>">Supprimer</a>
+
+            <?php endforeach ?>
+
+            <a href="logout.php">Se Deconnecter</a>
+
+        </div>
+
+
+
+
+    </main>
 
 
 

@@ -35,3 +35,19 @@ body{
 .hautmid a:hover{
     color: rgb(68, 118, 129);
 }
+
+.all{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+h2{
+    font-size: 4rem;
+}
+
+a,p{
+    font-size: 2rem;
+}

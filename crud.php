@@ -240,31 +240,32 @@ function addgroup($nom, $userid)
 
 
 //read
-function getById($id)
+function getById()
 {
+    $id = $_GET["id"];
     $db = connect();
-    $sql = "SELECT * FROM  WHERE id = :id";
+    $sql = "SELECT * FROM post WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         'id' => $id
     ]);
 
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    $product = $stmt->fetch();
 }
 
 
 
 //delete
-function deleteById($id)
+function deleteById()
 {
+    $id = $_GET["id"];
     $db = connect();
-    $sql = "DELETE FROM  WHERE id = :id";
+    $sql = "DELETE FROM post WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         'id' => $id
     ]);
 }
-
 //update
 function update($id, $nom, $type, $calories)
 {
