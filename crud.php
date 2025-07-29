@@ -239,19 +239,36 @@ function addgroup($nom, $userid)
 
 
 
-//read
-function getById()
+
+
+
+
+                                 //REMOVE PRODUCT
+
+
+function deletedirectory()
 {
-    $id = $_GET["id"];
+     $id = $_GET["id"];
     $db = connect();
     $sql = "SELECT * FROM post WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         'id' => $id
     ]);
+    
 
-    $product = $stmt->fetch();
+    $info = $stmt->fetch();
+    $path = 'uploads/'.$info['nom'].'_'.$info['userid'];
+
+ if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
+    if(!empty($path) && is_dir($path) ){
+        $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
+        $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+    }
 }
+   
+
 
 
 
@@ -266,6 +283,14 @@ function deleteById()
         'id' => $id
     ]);
 }
+
+
+                                //FIN REMOVEPRODUCT
+
+
+
+
+
 //update
 function update($id, $nom, $type, $calories)
 {

@@ -10,9 +10,6 @@ $get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.useri
 $get->execute();
 $posts = $get->fetchAll();
 
-$product = getById();
-
-echo "uploads/".$product['nom'].'_'.$product['userid']
 
 
 
@@ -65,6 +62,8 @@ echo "uploads/".$product['nom'].'_'.$product['userid']
             <a href="logout.php">Se Deconnecter</a>
 
         </div>
+
+        
 
 
 
