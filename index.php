@@ -68,7 +68,7 @@ $posts = $get->fetchAll();
 
                         <img src="uploads/<?php echo $post['nom'] ?>_<?php echo $post['userid'] ?>/preview.png" alt="">
                         <p><?= $post['nom'] ?></p>
-                        <p>Auteur : <?= $post['pseudo'] ?></p>
+                        <p>Publier par : <?= $post['pseudo'] ?></p>
 
 
 

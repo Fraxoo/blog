@@ -63,6 +63,7 @@ $posts = $get->fetchAll();
             <?php endforeach ?>
 
             <a class="deco" href="logout.php">Se Deconnecter</a>
+            <a class="rouge" href="deleteaccount.php">Supprimer le compte</a>
 
         </div>
 

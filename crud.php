@@ -189,14 +189,15 @@ function addpost() {
         // ====== 3. Sauvegarde en BDD ======
         try {
             $filesJson = json_encode($uploadedFiles);
-            $sql = "INSERT INTO post (nom, description, files, preview, userid)
-                    VALUES (:nom, :description, :files, :preview, :userid)";
+            $sql = "INSERT INTO post (nom, description, files, preview,dossier, userid)
+                    VALUES (:nom, :description, :files, :preview, :dossier, :userid)";
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 'nom' => $_POST['nom'],
                 'description' => $_POST['description'],
                 'files' => $filesJson,
                 'preview' => $preview,
+                'dossier' => $modelName . '_' . $userid,
                 'userid' => $userid
             ]);
 
@@ -248,7 +249,7 @@ function addgroup($nom, $userid)
 
 function deletedirectory()
 {
-     $id = $_GET["id"];
+    $id = $_GET["id"];
     $db = connect();
     $sql = "SELECT * FROM post WHERE id = :id";
     $stmt = $db->prepare($sql);
@@ -286,6 +287,55 @@ function deleteById()
 
 
                                 //FIN REMOVEPRODUCT
+
+
+
+                                //DELETE ACCOUNT 
+
+function deleteaccount(){
+    $id = $_SESSION['id'];
+    $bdd=connect();
+     // Supprimer d'abord les posts
+        $userid = $_SESSION['id'];
+    $db = connect();
+    $sql = "SELECT * FROM post WHERE userid = :userid";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        'userid' => $userid
+    ]);
+    
+
+    $info = $stmt->fetch();
+    $path = 'uploads/'.$info['nom'].'_'.$info['userid'];
+
+ if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
+    if(!empty($path) && is_dir($path) ){
+        $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
+        $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+    }
+
+    $stmt = $bdd->prepare('DELETE FROM post WHERE userid = :userid');
+    $stmt->execute(['userid' => $id]);
+
+    // Supprimer d'abord les groupes
+    $stmt = $bdd->prepare('DELETE FROM `group` WHERE userid = :userid');
+    $stmt->execute(['userid' => $id]);
+
+    // Puis supprimer l'utilisateur
+    $stmt = $bdd->prepare('DELETE FROM user WHERE id = :id');
+    $stmt->execute(['id' => $id]);
+    
+
+    session_destroy();
+}
+
+
+
+
+
+
+                                //FIN DELETE ACCOUNT
 
 
 

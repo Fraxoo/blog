@@ -68,4 +68,15 @@ a,p{
     margin-top: 3rem;
 }
 
+.rouge{
+    padding: 2rem;
+    background-color: rgb(253, 0, 0);
+    border-radius: 3rem;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 3rem;
+}
+
 
