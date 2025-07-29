@@ -6,7 +6,7 @@ PREVIEW MODEL (done)
 
 boucle foreach avec si t'es connecter tu peux visioner les publication sinon sa te redirige sur la page de connexion 
 
-par contre tu peux quand meme voir le feed en lui meme (manque connexion et affichage de page)
+par contre tu peux quand meme voir le feed en lui meme (done)
 
 
 
@@ -24,12 +24,12 @@ option pour modifier publication
 option pour supprimer publication (done)
 
 
-option pour ajouter en favoris 
+option pour ajouter en favoris(en cours)
 
 
 option pour laisser un commentaire (done)
 
-option changer adresse mail mot de passe
+option changer adresse mail / mot de passe
 
 
 

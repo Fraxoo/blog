@@ -47,6 +47,7 @@ p{
 
 .container{
   width: 50%;
+  margin: 1rem;
 }
 
 main{
@@ -60,8 +61,6 @@ main{
 .big p{
   font-size: 2rem;
 }
-
-
 
 .com{
   display: flex;
@@ -93,4 +92,28 @@ footer{
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.addcom h2{
+  font-size: 2rem;
+
+}
+
+.addcom{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.addcom input{
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 2rem;
+}
+
+.addcom button{
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
 }

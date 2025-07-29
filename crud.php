@@ -101,41 +101,80 @@ function login()
 //                                            FIN LOGIN
 
 
-                                        //POSTVIEW : 
+//POSTVIEW : 
 
-function postview(){                                        
-$bdd = connect();
-$id = $_GET["id"];
+function postview()
+{
+    $bdd = connect();
+    $id = $_GET["id"];
 
-$cherche = $bdd->prepare('SELECT * FROM post WHERE id = :id');
-$cherche->execute([
-    'id' => $id
-]);
-$post = $cherche->fetch();
+    $cherche = $bdd->prepare('SELECT * FROM post WHERE id = :id');
+    $cherche->execute([
+        'id' => $id
+    ]);
+    $post = $cherche->fetch();
 
-$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
-$get->execute([
-    'userid'=>$post['userid']
-]);
-$posts = $get->fetch();
+    $get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
+    $get->execute([
+        'userid' => $post['userid']
+    ]);
+    $posts = $get->fetch();
 
-return $posts;
+    return $posts;
+}
+
+function addreview()
+{
+    date_default_timezone_set('Europe/Paris');
+    $bdd = connect();
+
+    $date = date('d') . '/' . date('m') . '/' . date('y');
+    $heure = date('H') . 'h' . date('i');
+
+    $postid = $_GET['id'];
+
+    if (isset($_POST['commentaire'])) {
+        $request = $bdd->prepare('INSERT INTO review (commentaire,date,heure,postid,userid) VALUES (:commentaire, :date, :heure, :postid, :userid)');
+        $request->execute([
+            'commentaire' => $_POST['commentaire'],
+            'date' => $date,
+            'heure' => $heure,
+            'postid' => $postid,
+            'userid' => $_SESSION['id']
+        ]);
+    };
+}
+
+function readreview()
+{
+    $postid = $_GET['id'];
+    $bdd = connect();
+    $list = $bdd->prepare('SELECT * FROM review INNER JOIN user ON user.id = review.userid WHERE postid = :postid ORDER BY review.id DESC');
+    $list->execute([
+        'postid' => $postid
+    ]);
+
+    $lists = $list->fetchall();
+
+    return $lists;
 }
 
 
 
 
-                                        //FIN POSTVIEW//
+//FIN POSTVIEW//
 
 
 
 
 
 
-                                            //ADDPOST:
+//ADDPOST:
 
-function addpost() {
-    function createDirectoryIfNotExists($path) {
+function addpost()
+{
+    function createDirectoryIfNotExists($path)
+    {
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
@@ -233,7 +272,6 @@ function addpost() {
         } catch (PDOException $e) {
             echo "<p style='color:red;'>Erreur lors de l'enregistrement en base de données : " . htmlspecialchars($e->getMessage()) . "</p>";
         }
-
     } else {
         $debut = "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
     }
@@ -241,7 +279,7 @@ function addpost() {
 
 
 
-                                            //FIN ADD POST
+//FIN ADD POST
 
 
 
@@ -271,7 +309,7 @@ function addgroup($nom, $userid)
 
 
 
-                                 //REMOVE PRODUCT
+//REMOVE PRODUCT
 
 
 function deletedirectory()
@@ -283,19 +321,31 @@ function deletedirectory()
     $stmt->execute([
         'id' => $id
     ]);
-    
+
 
     $info = $stmt->fetch();
-    $path = 'uploads/'.$info['nom'].'_'.$info['userid'];
+    $path = 'uploads/' . $info['nom'] . '_' . $info['userid'];
 
- if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
-    if(!empty($path) && is_dir($path) ){
+    if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
+    if (!empty($path) && is_dir($path)) {
         $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
         $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+        foreach ($files as $f) {
+            if (is_file($f)) {
+                unlink($f);
+            } else {
+                $empty_dirs[] = $f;
+            }
+        }
+        if (!empty($empty_dirs)) {
+            foreach ($empty_dirs as $eachDir) {
+                rmdir($eachDir);
+            }
+        }
+        rmdir($path);
     }
 }
-   
+
 
 
 
@@ -313,33 +363,46 @@ function deleteById()
 }
 
 
-                                //FIN REMOVEPRODUCT
+//FIN REMOVEPRODUCT
 
 
 
-                                //DELETE ACCOUNT 
+//DELETE ACCOUNT 
 
-function deleteaccount(){
+function deleteaccount()
+{
     $id = $_SESSION['id'];
-    $bdd=connect();
-     // Supprimer d'abord les posts
-        $userid = $_SESSION['id'];
+    $bdd = connect();
+    // Supprimer d'abord les posts
+    $userid = $_SESSION['id'];
     $db = connect();
     $sql = "SELECT * FROM post WHERE userid = :userid";
     $stmt = $db->prepare($sql);
     $stmt->execute([
         'userid' => $userid
     ]);
-    
+
 
     $info = $stmt->fetch();
-    $path = 'uploads/'.$info['nom'].'_'.$info['userid'];
+    $path = 'uploads/' . $info['nom'] . '_' . $info['userid'];
 
- if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
-    if(!empty($path) && is_dir($path) ){
+    if (in_array($path, ['.', '/'])) return; // ensure to avoid accidents
+    if (!empty($path) && is_dir($path)) {
         $dir  = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS); //upper dirs are not included,otherwise DISASTER HAPPENS :)
         $files = new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($files as $f) {if (is_file($f)) {unlink($f);} else {$empty_dirs[] = $f;} } if (!empty($empty_dirs)) {foreach ($empty_dirs as $eachDir) {rmdir($eachDir);}} rmdir($path);
+        foreach ($files as $f) {
+            if (is_file($f)) {
+                unlink($f);
+            } else {
+                $empty_dirs[] = $f;
+            }
+        }
+        if (!empty($empty_dirs)) {
+            foreach ($empty_dirs as $eachDir) {
+                rmdir($eachDir);
+            }
+        }
+        rmdir($path);
     }
 
     $stmt = $bdd->prepare('DELETE FROM post WHERE userid = :userid');
@@ -352,7 +415,7 @@ function deleteaccount(){
     // Puis supprimer l'utilisateur
     $stmt = $bdd->prepare('DELETE FROM user WHERE id = :id');
     $stmt->execute(['id' => $id]);
-    
+
 
     session_destroy();
 }
@@ -362,7 +425,7 @@ function deleteaccount(){
 
 
 
-                                //FIN DELETE ACCOUNT
+//FIN DELETE ACCOUNT
 
 
 
@@ -381,11 +444,3 @@ function update($id, $nom, $type, $calories)
         'calories' => $calories
     ]);
 }
-
-
-
-
-
-
-
-

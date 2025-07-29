@@ -1,42 +1,13 @@
 <?php
 session_start();
+
 require_once('crud.php');
-date_default_timezone_set('Europe/Paris');
 
 $post = postview();
 
-$bdd = connect();
+addreview();
 
-$date = date('d').'/'.date('m').'/'.date('y');
-$heure = date('H').'h'.date('i');
-
-$postid = $_GET['id'];
-
-if(isset($_POST['commentaire'])){
-$request = $bdd->prepare('INSERT INTO review (commentaire,date,heure,postid,userid) VALUES (:commentaire, :date, :heure, :postid, :userid)');
-$request->execute([
-    'commentaire' => $_POST['commentaire'],
-    'date' => $date,
-    'heure' => $heure,
-    'postid' => $postid,
-    'userid' => $_SESSION['id']
-]);
-
-};
-
-$list = $bdd->prepare('SELECT * FROM review INNER JOIN user ON user.id = review.userid WHERE postid = :postid');
-$list->execute([
-    'postid' => $postid
-]);
-
-$commentaires = $list->fetchall();
-
-
-
-
-
-
-
+$commentaires = readreview();
 
 ?>
 
