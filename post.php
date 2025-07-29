@@ -55,21 +55,21 @@ $posts = $get->fetch();
 
 </header>
 
-    <?php if(isset($_SESSION['id'])):?>
     <main>
+    <?php if(isset($_SESSION['id'])):?>
         <h1><?= $post['nom']?></h1>
         <p>Publier par : <?= $posts['pseudo']?></p>
         <div class="container" id="container3D"></div>
         <p><?= $post['description']?></p>
-    </main>
+    
 
     <?php else :?>
 
-        <p>Veuillez <a href="login.php">vous connecter pour voir cette publication</a></p>
+        <p>Veuillez <a href="login.php">vous connecter</a> pour voir cette publication</p>
 
     <?php endif; ?>
 
-
+    </main>
 
 
 
