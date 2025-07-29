@@ -1,22 +1,35 @@
 <?php
 session_start();
 require_once('crud.php');
+date_default_timezone_set('Europe/Paris');
+
+$post = postview();
 
 $bdd = connect();
-$id = $_GET["id"];
 
-// On récupère tous les posts (mais pour l'exemple on va prendre le premier)
-$cherche = $bdd->prepare('SELECT * FROM post WHERE id = :id');
-$cherche->execute([
-    'id' => $id
-]);
-$post = $cherche->fetch();
+$date = date('d').'/'.date('m').'/'.date('y');
+$heure = date('H').'h'.date('i');
 
-$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
-$get->execute([
-    'userid'=>$post['userid']
+$postid = $_GET['id'];
+
+if(isset($_POST['commentaire'])){
+$request = $bdd->prepare('INSERT INTO review (commentaire,date,heure,postid,userid) VALUES (:commentaire, :date, :heure, :postid, :userid)');
+$request->execute([
+    'commentaire' => $_POST['commentaire'],
+    'date' => $date,
+    'heure' => $heure,
+    'postid' => $postid,
+    'userid' => $_SESSION['id']
 ]);
-$posts = $get->fetch();
+
+};
+
+$list = $bdd->prepare('SELECT * FROM review INNER JOIN user ON user.id = review.userid WHERE postid = :postid');
+$list->execute([
+    'postid' => $postid
+]);
+
+$commentaires = $list->fetchall();
 
 
 
@@ -58,7 +71,7 @@ $posts = $get->fetch();
     <main>
     <?php if(isset($_SESSION['id'])):?>
         <h1><?= $post['nom']?></h1>
-        <p>Publier par : <?= $posts['pseudo']?></p>
+        <p>Publier par : <?= $post['pseudo']?></p>
         <div class="container" id="container3D"></div>
         <p><?= $post['description']?></p>
     
@@ -68,8 +81,32 @@ $posts = $get->fetch();
         <p>Veuillez <a href="login.php">vous connecter</a> pour voir cette publication</p>
 
     <?php endif; ?>
-
+    
     </main>
+
+<footer>
+    <div class="addcom">
+        <h2>Commentaire :</h2>
+        <form action="" method="post">
+            <input type="text" name="commentaire" placeholder="Ajoutez un commentaire" required>
+            <button>Ajoutez</button>
+        </form>
+    </div>
+    
+    
+        <?php foreach($commentaires as $commentaire):?>
+            <div class="com">
+                <div class="top">
+                <p>Publier par <?= $commentaire['pseudo']?> le <?= $commentaire['date']?> a <?= $commentaire['heure']?></p>
+                </div>
+                <p><?= $commentaire['commentaire']?></p>
+            </div>
+        <?php endforeach ?>
+    
+
+    
+
+</footer>
 
 
 

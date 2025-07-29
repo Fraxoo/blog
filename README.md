@@ -13,7 +13,7 @@ par contre tu peux quand meme voir le feed en lui meme (manque connexion et affi
 faire des sorte de groupe de tchat ou on doit demander l'autoristaiton de rejoindre et si on est accepte le visioner et on doit aussi avoir un moyen de le quitter 
 
 
-option pour supprimer le compte ainsi que ces posts(en cours)
+option pour supprimer le compte ainsi que ces posts(done)
 
 
 option pour se deconnecter (done)
@@ -27,7 +27,7 @@ option pour supprimer publication (done)
 option pour ajouter en favoris 
 
 
-option pour laisser un commentaire 
+option pour laisser un commentaire (done)
 
 option changer adresse mail mot de passe
 

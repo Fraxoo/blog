@@ -14,14 +14,30 @@ init();
 animate();
 
 function init() {
+
     // Créer la scène
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xeeeeee);
+    scene.background = new THREE.Color("#626262");
 
-    // Ajouter une lumière directionnelle
-    const light = new THREE.DirectionalLight(0xffffff, 1);
+    // Lumière ambiante (éclaire toute la scène de manière uniforme)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    scene.add(ambientLight);
+
+    // Lumière directionnelle principale
+    const light = new THREE.DirectionalLight(0xffffff, 2);
     light.position.set(2, 20, 10);
     scene.add(light);
+
+    // Une deuxième DirectionalLight pour réduire les ombres trop sombres
+    const light2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light2.position.set(-10, -10, -10);
+    scene.add(light2);
+
+    // (Optionnel) HemisphereLight pour un rendu plus réaliste
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
+    hemiLight.position.set(0, 20, 0);
+    scene.add(hemiLight);
+
 
     // Créer la caméra
     camera = new THREE.PerspectiveCamera(
@@ -45,7 +61,7 @@ function init() {
 
     // Charger le modèle glTF
     loadModel();
-    
+
     // Ajuster la scène si la fenêtre change de taille
     window.addEventListener("resize", onWindowResize, false);
 }

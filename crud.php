@@ -101,6 +101,33 @@ function login()
 //                                            FIN LOGIN
 
 
+                                        //POSTVIEW : 
+
+function postview(){                                        
+$bdd = connect();
+$id = $_GET["id"];
+
+$cherche = $bdd->prepare('SELECT * FROM post WHERE id = :id');
+$cherche->execute([
+    'id' => $id
+]);
+$post = $cherche->fetch();
+
+$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
+$get->execute([
+    'userid'=>$post['userid']
+]);
+$posts = $get->fetch();
+
+return $posts;
+}
+
+
+
+
+                                        //FIN POSTVIEW//
+
+
 
 
 
