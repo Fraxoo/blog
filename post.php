@@ -8,7 +8,7 @@ $post = postview();
 addreview();
 
 $commentaires = readreview();
-
+$id = $_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +45,7 @@ $commentaires = readreview();
         <p>Publier par : <?= $post['pseudo']?></p>
         <div class="container" id="container3D"></div>
         <p><?= $post['description']?></p>
+        <a href="addfavoris.php?id=<?= $id ?>">Ajoutez au favoris</a>
     
 
     <?php else :?>
@@ -74,9 +75,6 @@ $commentaires = readreview();
             </div>
         <?php endforeach ?>
     
-
-    
-
 </footer>
 
 
