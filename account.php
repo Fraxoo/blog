@@ -27,7 +27,7 @@ $favoris = showfavorites();
 </head>
 
 <body>
-    <?php if(isset($_SESSION['id'])):?>
+    
 
     <header>
 
@@ -40,7 +40,7 @@ $favoris = showfavorites();
         </div>
 
     </header>
-
+    <?php if(isset($_SESSION['id'])):?>
     <main>
 
         <div class="all">

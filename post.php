@@ -24,11 +24,10 @@ $id = $_GET['id'];
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 
-
-
 <body>
 
 <header>
+
     <div class="haut">
 
             <div class="hautmid">
@@ -46,10 +45,6 @@ $id = $_GET['id'];
         <div class="container" id="container3D"></div>
         <p><?= $post['description']?></p>
         <a class="fav" href="addfavoris.php?id=<?= $id ?>">Ajoutez au favoris</a>
-    
-
-    
-    
     </main>
 
 <footer>
@@ -73,11 +68,6 @@ $id = $_GET['id'];
     
 </footer>
 
-
-
-
-
-
     <!-- On injecte la variable PHP dans une variable JS globale -->
     <script>
         window.objToRender = "<?php echo $post['nom'].'_'.$post['userid']; ?>";
@@ -85,7 +75,6 @@ $id = $_GET['id'];
 
     <!-- Script principal qui va utiliser objToRender -->
     <script type="module" src="main.js"></script>
-
 
 
     <?php else :?>
