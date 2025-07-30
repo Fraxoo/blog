@@ -1,13 +1,12 @@
-<?php
+<?php 
+
 session_start();
+
 require_once('crud.php');
 if(isset($_SESSION['id'])){
 
-
-deletedirectory();
-deleteById();
+deletefavoris();
 }
 header('Location: account.php');
-
 
 ?>

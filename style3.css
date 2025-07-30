@@ -40,6 +40,11 @@ h2{
     color: #555555;
 }
 
+.big{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 main{
     display: flex;
     justify-content: center;

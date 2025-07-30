@@ -77,6 +77,27 @@ a,p{
     font-weight: bold;
     font-size: 1.5rem;
     margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.model{
+    background-color: rgb(235, 235, 235);
+    padding: 1rem 3rem;
+    border-radius: 3rem;
+    margin: 2rem;
+}
+
+.post{
+    background-color: white;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+}
+
+.favoris{
+    background-color: rgb(235, 235, 235);
+    padding: 1rem 3rem;
+    border-radius: 3rem;
+    margin: 2rem;
 }
 
 

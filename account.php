@@ -6,16 +6,9 @@ require_once('crud.php');
 
 $bdd = connect();
 
-$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
-$get->execute([
-    'userid' => $_SESSION['id']
-]);
-$posts = $get->fetchAll();
+$posts = showpost();
 
-
-
-
-
+$favoris = showfavorites();
 
 ?>
 
@@ -34,6 +27,7 @@ $posts = $get->fetchAll();
 </head>
 
 <body>
+    <?php if(isset($_SESSION['id'])):?>
 
     <header>
 
@@ -51,23 +45,39 @@ $posts = $get->fetchAll();
 
         <div class="all">
             <h2><?= $_SESSION['pseudo'] ?></h2>
-            <p>Mes model en ligne :</p>
 
-            <?php foreach ($posts as $post): ?>
-                <div class="post">
-                    <p><?= $post['nom']?></p>
-                    <p><?= $post['id']?></p>
-                    <a href="removeproduct.php?id=<?= $post['id']?>">Supprimer</a>
-                </div>
+            <div class="model">
+                <p>Mes model en ligne :</p>
 
-            <?php endforeach ?>
+                <?php foreach ($posts as $post): ?>
+                    <div class="post">
+                        <p><?= $post['nom'] ?></p>
+                        <p><?= $post['id'] ?></p>
+                        <a href="removeproduct.php?id=<?= $post['id'] ?>">Supprimer</a>
+                    </div>
+                <?php endforeach ?>
+            </div>
 
+
+            <div class="favoris">
+                <p>Mes Favoris :</p>
+                <?php foreach ($favoris as $favori): ?>
+                    <div class="post">
+                        <p><?= $favori['nom'] ?></p>
+                        <p><?= $favori['id'] ?></p>
+                        <a href="deletefavoris.php?id=<?= $favori['id'] ?>">Supprimer</a>
+                    </div>
+
+
+
+                <?php endforeach ?>
+            </div>
             <a class="deco" href="logout.php">Se Deconnecter</a>
             <a class="rouge" href="deleteaccount.php">Supprimer le compte</a>
 
         </div>
 
-        
+
 
 
 
@@ -75,7 +85,11 @@ $posts = $get->fetchAll();
     </main>
 
 
+<?php else :?>
 
+        <?php header('location:index.php')?>
+
+    <?php endif; ?>
 
 </body>
 

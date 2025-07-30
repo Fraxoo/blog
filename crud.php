@@ -367,7 +367,7 @@ function deleteById()
 
 
 
-//DELETE ACCOUNT 
+                                        // ACCOUNT 
 
 function deleteaccount()
 {
@@ -420,12 +420,42 @@ function deleteaccount()
     session_destroy();
 }
 
+function showpost(){
+$bdd = connect();
+$get = $bdd->prepare('SELECT * FROM user INNER JOIN post ON user.id = post.userid WHERE userid = :userid');
+$get->execute([
+    'userid' => $_SESSION['id']
+]);
+$resultat = $get->fetchAll();
+return $resultat;
+}
+
+function showfavorites(){
+    $bdd = connect();
+    $get = $bdd->prepare('SELECT * FROM favoris INNER JOIN post ON favoris.postid = post.id WHERE favoris.userid = :userid');
+    $get->execute([
+        'userid' => $_SESSION['id']
+    ]);
+    $resultat = $get->fetchAll();
+    return $resultat;
+}
+
+function deletefavoris(){
+    $bdd = connect();
+    $request = $bdd->prepare('DELETE FROM favoris WHERE postid = :postid');
+    $request->execute([
+        'postid' => $_GET['id']
+    ]);
+}
 
 
 
 
 
-//FIN DELETE ACCOUNT
+
+
+
+                                            //FIN  ACCOUNT
 
 
 

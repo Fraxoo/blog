@@ -62,7 +62,7 @@ addpost();
             </div>
 
         <?php else : ?>
-            <p>Veuillez vous connecter pour Upload un fichier <a href="login.php">Se Connecter</a></p>
+            <p class="big">Veuillez vous connecter pour Upload un fichier <a href="login.php">Se Connecter</a></p>
         <?php endif ?>
 
     </main>

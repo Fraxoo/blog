@@ -45,14 +45,10 @@ $id = $_GET['id'];
         <p>Publier par : <?= $post['pseudo']?></p>
         <div class="container" id="container3D"></div>
         <p><?= $post['description']?></p>
-        <a href="addfavoris.php?id=<?= $id ?>">Ajoutez au favoris</a>
+        <a class="fav" href="addfavoris.php?id=<?= $id ?>">Ajoutez au favoris</a>
     
 
-    <?php else :?>
-
-        <p>Veuillez <a href="login.php">vous connecter</a> pour voir cette publication</p>
-
-    <?php endif; ?>
+    
     
     </main>
 
@@ -89,5 +85,13 @@ $id = $_GET['id'];
 
     <!-- Script principal qui va utiliser objToRender -->
     <script type="module" src="main.js"></script>
+
+
+
+    <?php else :?>
+
+        <p>Veuillez <a href="login.php">vous connecter</a> pour voir cette publication</p>
+
+    <?php endif; ?>
 </body>
 </html>

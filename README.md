@@ -25,7 +25,7 @@ option pour supprimer publication (done)
 
 
 option pour ajouter en favoris(done)
-supprimer favoris (en cours)
+supprimer favoris (done)
 
 
 option pour laisser un commentaire (done)
