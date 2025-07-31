@@ -12,7 +12,7 @@ addcomm();
 
 $sujetscomms = sujetcomm();
 
-var_dump($sujetscomms)
+
 
 ?>
 
@@ -68,20 +68,22 @@ var_dump($sujetscomms)
 
             </div>
 
+            <div class="comm">
             <?php foreach ($sujetscomms as $sujetscomm) : ?>
 
-                <div class="comm">
+                <div class="behind">
                     <div class="auteur">
                         <p>Poster par <?=$sujetscomm['pseudo']?></p>
                     </div>
 
                     <div class="commentaire">
-
+                        <p>Poster le <?= $sujetscomm['date']?> a <?=$sujetscomm['heure']?></p>
+                        <p><?= $sujetscomm['commentaire']?></p>
                     </div>
                 </div>
-
             <?php endforeach ?>
-
+                    
+            </div>
         </main>
 
         <footer>
