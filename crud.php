@@ -526,6 +526,10 @@ $request2->execute([
 
 function deletecom(){
     $bdd = connect();
+    $request2 = $bdd->prepare('UPDATE sujet SET reponses = reponses - 1 WHERE sujet_id = :sujet_id');
+    $request2->execute([
+        'sujet_id' => $_GET['sujet_id']
+    ]);
     $request = $bdd->prepare('DELETE FROM review WHERE review_id = :review_id');
     $request->execute([
         'review_id' => $_GET['id']

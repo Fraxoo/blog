@@ -75,7 +75,7 @@ $sujetscomms = sujetcomm();
                     <div class="auteur">
                         <p>Poster par <?=$sujetscomm['pseudo']?></p>
                         <?php if($sujetscomm['id'] == $_SESSION['id']):?>
-                            <a href="deletecom.php?id=<?=$sujetscomm['review_id']?>">Supprimer</a>
+                            <a href="deletecom.php?id=<?=$sujetscomm['review_id']?>&sujet_id=<?= $_GET['id']?>">Supprimer</a>
                         <?php endif ?>
                     </div>
 
