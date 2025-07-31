@@ -514,9 +514,17 @@ $request->execute([
     'postid' => $_GET['id'],
     'userid' => $_SESSION['id']
 ]);
+
+
+$request2 = $bdd->prepare('UPDATE sujet SET reponses = reponses + 1 WHERE sujet_id = :sujet_id');
+$request2->execute([
+    'sujet_id' => $_GET['id']
+]);
+}
 }
 
-}
+
+
 
                                             //FIN SUJET/FEED
 

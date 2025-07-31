@@ -76,10 +76,12 @@ $sujetscomms = sujetcomm();
                         <p>Poster par <?=$sujetscomm['pseudo']?></p>
                     </div>
 
+                    
                     <div class="commentaire">
                         <p>Poster le <?= $sujetscomm['date']?> a <?=$sujetscomm['heure']?></p>
                         <p><?= $sujetscomm['commentaire']?></p>
                     </div>
+                    
                 </div>
             <?php endforeach ?>
                     
