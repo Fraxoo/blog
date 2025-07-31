@@ -69,11 +69,12 @@ var_dump($sujetscomms)
             </div>
 
             <?php foreach ($sujetscomms as $sujetscomm) : ?>
-                <?php var_dump($sujetscomm) ?>
+
                 <div class="comm">
                     <div class="auteur">
-
+                        <p>Poster par <?=$sujetscomm['pseudo']?></p>
                     </div>
+
                     <div class="commentaire">
 
                     </div>

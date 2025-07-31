@@ -492,7 +492,7 @@ function sujetlist(){
 
 function sujetcomm(){
     $bdd = connect();
-    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN review ON sujet.sujet_id = review.postid WHERE postid = :postid');
+    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN review ON sujet.sujet_id = review.postid INNER JOIN user ON user.id = review.userid WHERE review.postid = :postid');
     $request->execute([
         'postid' => $_GET['id']
     ]);
