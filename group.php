@@ -8,23 +8,8 @@ date_default_timezone_set('Europe/Paris');
 
 addsujet();
 
-$bdd = connect();
-    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN user WHERE user.id = sujet.userid');
-    $request->execute();
+$sujets = sujetlist();
 
-    $sujets = $request->fetchAll();
-
-    
-
-
-
-
-
-
-
-
-
-    
 
 ?>
 
@@ -84,8 +69,9 @@ $bdd = connect();
                     <?php foreach ($sujets as $sujet): ?>
                         
                         <div class="sujet">
+                            
                             <div class="nom">
-                                <a href="sujet.php?id=<?= $sujet['id'] ?>"><?= $sujet['nom'] ?></a>
+                                <a href="sujet.php?id=<?= $sujet['sujet_id'] ?>"><?= $sujet['nom'] ?></a>
                             </div>
                             <div class="sujetright">
                                 <div class="reponses">
@@ -121,7 +107,7 @@ $bdd = connect();
                     </form>
                 </div>
             <?php else : ?>
-                <p>Veuillez <a href="login.php">Vous connecter</a> pour ajoutez un sujet</p>
+                <p>Veuillez <a href="login.php">vous connecter</a> pour ajoutez un sujet</p>
             <?php endif ?>
         </footer>
 

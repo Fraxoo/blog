@@ -479,31 +479,27 @@ $request->execute([
 
 }
 
-function showsujet(){
 
-}
-
-function foreachsujet(){ 
+function sujetlist(){
     $bdd = connect();
-    $request = $bdd->prepare('SELECT * FROM sujet');
+    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN user WHERE user.id = sujet.userid');
     $request->execute();
 
     $sujets = $request->fetchAll();
-
-foreach($sujets as $sujet){
-    $request2 = $bdd->prepare('SELECT * FROM user WHERE id = :userid');
-    $request2->execute([
-        'userid' => $sujet['userid']
-    ]);
-
-    $nom = $request2->fetch();
-        if($nom['id'] == $sujet['userid']){
-            echo $nom['pseudo'];
-        }
-    }
+    return $sujets;
 }
 
 
+function sujetcomm(){
+    $bdd = connect();
+    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN review ON sujet.sujet_id = review.postid WHERE postid = :postid');
+    $request->execute([
+        'postid' => $_GET['id']
+    ]);
+
+    $sujets = $request->fetchAll();
+    return $sujets;
+}
                                             //FIN SUJET/FEED
 
 

@@ -90,6 +90,10 @@ body{
     padding: 0.8rem 4rem;
 }
 
+main{
+    margin: 1rem 1rem;
+}
+
 
 .behind{
     background-color: #264758;
@@ -129,6 +133,16 @@ body{
     margin-left: 1rem;
 }
 
+.nom a{
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.nom a:hover{
+    text-decoration: underline;
+    color: red;
+}
+
 .sujetright{
     display: flex;
     margin-right: 2rem;
@@ -152,3 +166,40 @@ body{
     padding-left: 1rem;
 }
 
+footer{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+footer p {
+    font-size: 1.5rem;
+}
+
+.addsujet{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.addsujet input{
+    padding: 1rem 3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #407c91;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.addsujet  input:hover{
+    background-color: #4291ad;
+}
+
+.addsujet button{
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+}
