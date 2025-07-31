@@ -42,10 +42,10 @@ $posts = $get->fetchAll();
                 <button><img src="images/search(1).png"></button>
 
                 <a href="upload.php">UPLOAD</a>
+                <a href="group.php">Discussion</a>
                 <?php if (!isset($_SESSION['id'])): ?>
                     <a href="login.php">Se Connecter</a>
                 <?php else : ?>
-                    <a href="group.php">Discussion</a>
                     <a href="account.php">Mon Compte</a>
                 <?php endif ?>
             </div>

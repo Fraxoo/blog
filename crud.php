@@ -458,7 +458,53 @@ function deletefavoris(){
                                             //FIN  ACCOUNT
 
 
+                                            //sujet/feed
 
+
+
+function addsujet(){
+if(isset($_POST['nom'])){
+$date = date('d') . '/' . date('m') . '/' . date('y');
+$heure = date('H') . 'h' . date('i');
+$bdd = connect();
+$request = $bdd->prepare('INSERT INTO sujet (nom,date,heure,reponses,userid) VALUES (:nom,:date,:heure,:reponses,:userid)');
+$request->execute([
+    'nom' => $_POST['nom'],
+    'date' => $date,
+    'heure' => $heure,
+    'reponses' => 0,
+    'userid' => $_SESSION['id']
+]);
+}
+
+}
+
+function showsujet(){
+
+}
+
+function foreachsujet(){ 
+    $bdd = connect();
+    $request = $bdd->prepare('SELECT * FROM sujet');
+    $request->execute();
+
+    $sujets = $request->fetchAll();
+
+foreach($sujets as $sujet){
+    $request2 = $bdd->prepare('SELECT * FROM user WHERE id = :userid');
+    $request2->execute([
+        'userid' => $sujet['userid']
+    ]);
+
+    $nom = $request2->fetch();
+        if($nom['id'] == $sujet['userid']){
+            echo $nom['pseudo'];
+        }
+    }
+}
+
+
+                                            //FIN SUJET/FEED
 
 
 //update

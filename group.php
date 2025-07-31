@@ -4,6 +4,27 @@ session_start();
 
 require_once('crud.php');
 
+date_default_timezone_set('Europe/Paris');
+
+addsujet();
+
+$bdd = connect();
+    $request = $bdd->prepare('SELECT * FROM sujet INNER JOIN user WHERE user.id = sujet.userid');
+    $request->execute();
+
+    $sujets = $request->fetchAll();
+
+    
+
+
+
+
+
+
+
+
+
+    
 
 ?>
 
@@ -24,42 +45,87 @@ require_once('crud.php');
 
 <body>
 
-<div class="all">
-    <header>
+    <div class="all">
+        <header>
 
-        <div class="haut">
-            <div class="hautgauche">
-                <img src="images/pngegg.png">
-                <h1><a href="index.php">Fablog3D</a></h1>
-            </div>
-            <div class="hautdroite">
+            <div class="haut">
+                <div class="hautgauche">
+                    <img src="images/pngegg.png">
+                    <h1><a href="index.php">Fablog3D</a></h1>
+                </div>
+                <div class="hautdroite">
 
-                <input type="search">
-                <button><img src="images/search(1).png"></button>
+                    <input type="search">
+                    <button><img src="images/search(1).png"></button>
 
-                <a href="upload.php">UPLOAD</a>
-                <?php if (!isset($_SESSION['id'])): ?>
-                    <a href="login.php">Se Connecter</a>
-                <?php else : ?>
+                    <a href="upload.php">UPLOAD</a>
                     <a href="group.php">Discussion</a>
-                    <a href="account.php">Mon Compte</a>
-                <?php endif ?>
+                    <?php if (!isset($_SESSION['id'])): ?>
+                        <a href="login.php">Se Connecter</a>
+                    <?php else : ?>
+                        <a href="account.php">Mon Compte</a>
+                    <?php endif ?>
+                </div>
             </div>
-        </div>
 
-    </header>
-    <?php if(isset($_SESSION['id'])):?>
-<main>
+        </header>
+
+        <main>
+
+            <div class="behind">
+                <div class="topsujet">
+                    <p>SUJETS</p>
+                    <div class="topsujetright">
+                        <p>RÉPONSES</p>
+                        <p>CREATEUR</p>
+                    </div>
+                </div>
+                <div class="allsujet">
+                    <?php foreach ($sujets as $sujet): ?>
+                        
+                        <div class="sujet">
+                            <div class="nom">
+                                <a href="sujet.php?id=<?= $sujet['id'] ?>"><?= $sujet['nom'] ?></a>
+                            </div>
+                            <div class="sujetright">
+                                <div class="reponses">
+                                    <p><?= $sujet['reponses'] ?></p>
+                                </div>
+                                <div class="lastmess">
+                                    <p>Par <?= $sujet ['pseudo']?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+
+
+        </main>
 
 
 
-</main>
-<?php else :?>
 
-        <?php header('location:index.php')?>
 
-    <?php endif; ?>
-</div>
+
+
+
+        <footer>
+
+            <?php if (isset($_SESSION['id'])): ?>
+                <div class="addsujet">
+                    <p>Voulez vous ajoutez un sujet de discussion?</p>
+                    <form action="" method="post">
+                        <input type="texte" name="nom" placeholder="Nom du sujet" required>
+                        <button>Ajoutez</button>
+                    </form>
+                </div>
+            <?php else : ?>
+                <p>Veuillez <a href="login.php">Vous connecter</a> pour ajoutez un sujet</p>
+            <?php endif ?>
+        </footer>
+
+    </div>
 </body>
 
 </html>
