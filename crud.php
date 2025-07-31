@@ -149,7 +149,7 @@ function readreview()
 {
     $postid = $_GET['id'];
     $bdd = connect();
-    $list = $bdd->prepare('SELECT * FROM review INNER JOIN user ON user.id = review.userid WHERE postid = :postid ORDER BY review.id DESC');
+    $list = $bdd->prepare('SELECT * FROM review INNER JOIN user ON user.id = review.userid WHERE postid = :postid ORDER BY review.review_id DESC');
     $list->execute([
         'postid' => $postid
     ]);
@@ -523,6 +523,14 @@ $request2->execute([
 }
 }
 
+
+function deletecom(){
+    $bdd = connect();
+    $request = $bdd->prepare('DELETE FROM review WHERE review_id = :review_id');
+    $request->execute([
+        'review_id' => $_GET['id']
+    ]);
+}
 
 
 
