@@ -57,7 +57,7 @@ $sujets = sujetlist();
 
         <main>
             <div class="retour">
-                <a href="group.php">Retour</a>
+                <a href="index.php">Retour</a>
             </div>
             
             <div class="behind">

@@ -6,7 +6,7 @@ require_once('crud.php');
 
 deletecom();
 
-header('location:group.php')
-
+header('Location: sujet.php?id=' . $_GET['sujet_id']);
+exit();
 
 ?>

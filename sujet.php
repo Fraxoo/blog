@@ -12,7 +12,11 @@ addcomm();
 
 $sujetscomms = sujetcomm();
 
+$admin = changecouleur();
 
+var_dump($admin);
+
+echo $_SESSION['id']
 
 ?>
 
@@ -81,8 +85,10 @@ $sujetscomms = sujetcomm();
 
                     
                     <div class="commentaire">
+
                         <p>Poster le <?= $sujetscomm['date']?> a <?=$sujetscomm['heure']?></p>
                         <p><?= $sujetscomm['commentaire']?></p>
+                         
                     </div>
                     
                 </div>

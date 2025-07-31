@@ -536,6 +536,18 @@ function deletecom(){
     ]);
 }
 
+function changecouleur(){
+    $bdd = connect();
+    $request = $bdd->prepare('SELECT * FROM sujet WHERE userid = :userid AND id = :id');
+    $request->execute([
+        'userid' => $_SESSION['id'],
+        'id' => $_GET['id']
+    ]);
+ ////////////////////////////////////:marche pas
+    $admins = $request->fetch();
+    return $admins;
+}
+
 
 
                                             //FIN SUJET/FEED
