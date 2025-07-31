@@ -56,7 +56,10 @@ $sujets = sujetlist();
         </header>
 
         <main>
-
+            <div class="retour">
+                <a href="group.php">Retour</a>
+            </div>
+            
             <div class="behind">
                 <div class="topsujet">
                     <p>SUJETS</p>
@@ -88,12 +91,6 @@ $sujets = sujetlist();
 
 
         </main>
-
-
-
-
-
-
 
 
         <footer>

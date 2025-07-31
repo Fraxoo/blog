@@ -497,9 +497,27 @@ function sujetcomm(){
         'postid' => $_GET['id']
     ]);
 
-    $sujets = $request->fetchAll();
+    $sujets = $request->fetchall();
     return $sujets;
 }
+
+function addcomm(){
+if(isset($_POST['commentaire'])){
+$date = date('d') . '/' . date('m') . '/' . date('y');
+$heure = date('H') . 'h' . date('i');
+$bdd = connect();
+$request = $bdd->prepare('INSERT INTO review (commentaire,date,heure,postid,userid) VALUES (:commentaire,:date,:heure,:postid,:userid)');
+$request->execute([
+    'commentaire' => $_POST['commentaire'],
+    'date' => $date,
+    'heure' => $heure,
+    'postid' => $_GET['id'],
+    'userid' => $_SESSION['id']
+]);
+}
+
+}
+
                                             //FIN SUJET/FEED
 
 

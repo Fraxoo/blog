@@ -8,7 +8,11 @@ date_default_timezone_set('Europe/Paris');
 
 $sujets = sujetlist();
 
-$sujetscomm = sujetcomm();
+addcomm();
+
+$sujetscomms = sujetcomm();
+
+var_dump($sujetscomms)
 
 ?>
 
@@ -55,10 +59,49 @@ $sujetscomm = sujetcomm();
         </header>
 
         <main>
-        
 
+            <div class="mid">
 
+                <div class="retour">
+                    <a href="group.php">Retour</a>
+                </div>
 
+            </div>
 
+            <?php foreach ($sujetscomms as $sujetscomm) : ?>
+                <?php var_dump($sujetscomm) ?>
+                <div class="comm">
+                    <div class="auteur">
+
+                    </div>
+                    <div class="commentaire">
+
+                    </div>
+                </div>
+
+            <?php endforeach ?>
 
         </main>
+
+        <footer>
+
+            <?php if (isset($_SESSION['id'])): ?>
+                <div class="addsujet">
+                    <p>Voulez vous ajoutez un commentaire?</p>
+                    <form action="" method="post">
+                        <input type="texte" name="commentaire" placeholder="Commentaire :" required>
+                        <button>Ajoutez</button>
+                    </form>
+                </div>
+            <?php else : ?>
+                <p>Veuillez <a href="login.php">vous connecter</a> pour ajoutez un commentaire</p>
+            <?php endif ?>
+        </footer>
+
+
+    </div>
+
+
+
+
+    </main>

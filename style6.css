@@ -94,6 +94,25 @@ main{
     margin: 1rem 1rem;
 }
 
+.retour{
+    
+    background-color: #6198b3;
+    width: fit-content;
+    margin: 2rem 0 2rem 0rem;
+    border-radius: 10px;
+}
+
+.retour:hover{
+    background-color: #5ebbe9;
+}
+
+.retour a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 1rem 2rem;
+}
 
 .behind{
     background-color: #264758;
