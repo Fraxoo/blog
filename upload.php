@@ -2,7 +2,13 @@
 session_start();
 require_once('crud.php');
 
-addpost();
+
+
+if(isset($_FILES['preview'])){
+    addpost();
+    $erreur = addpost();
+}
+
 
 ?>
 
@@ -35,13 +41,11 @@ addpost();
 
     <main>
         <?php if (isset($_SESSION['id'])): ?>
-
             <div class="titre">
                 <h2>Upload un nouveau model</h2>
             </div>
-
+            
             <div class="upload">
-
                 <form action="upload.php" method="post" enctype="multipart/form-data">
                     <div class="info">
                         <input type="text" class="nom" name="nom" placeholder="Nom :" required>
@@ -50,16 +54,22 @@ addpost();
                     <div class="model">
                         <p>*Model 3D :</p>
                         <input type="file" class="file" name="files[]" webkitdirectory directory multiple required>
+                        <p>Veuillez envoyer le dossier avec le fichier en format <span style="color: red;">GLTF</span></p>
                     </div>
                     <div class="model">
                         <p>*Preview :</p>
                         <input type="file" class="file" name="preview" required>
+                        <p>Prenez une capture d'ecran du model car je n'ai pas reussi a avoir une preview autrement</p>
                     </div>
-                    <?= $debut = "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";?>
-                        <button type="submit">Upload</button>
+                    
+                    <button type="submit">Upload</button>
+                    <?= $erreur ?>
                 </form>
-
+                <div class="erreur">
+                    <?= $erreur ?>
+                
             </div>
+            
 
         <?php else : ?>
             <p class="big">Veuillez vous connecter pour Upload un fichier <a href="login.php">Se Connecter</a></p>

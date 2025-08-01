@@ -14,7 +14,7 @@ body{
 .all{
     margin: 0 8rem 0 8rem;
     background-color: white;
-    height: 100vh;
+    height: 100%;
 }
 
 .haut{
@@ -148,6 +148,10 @@ main{
     flex-wrap: wrap;
 }
 
+.sujet:hover{
+    background-color: #b2bdc6;
+}
+
 .nom{
     margin-left: 1rem;
 }
@@ -199,6 +203,7 @@ footer p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 2rem;
 }
 
 .addsujet input{

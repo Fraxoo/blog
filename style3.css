@@ -45,12 +45,22 @@ h2{
     font-weight: bold;
 }
 
+.erreur{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+
+}
+
 main{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 15rem;
+    margin-top: 12rem;
 }
 
 .titre{
@@ -85,6 +95,8 @@ main{
 .info{
     display: flex;
     gap: 2rem;
+    justify-content: center;
+    margin: 2rem;
 }
 
 .model{

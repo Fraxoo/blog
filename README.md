@@ -1,4 +1,4 @@
-if post le meme fichier et que lid et le meme dans ce cas non mais si  post le meme fichier mais que lid n'est pas le meme dans ce cas oui
+if post le meme fichier et que lid et le meme dans ce cas non mais si  post le meme fichier mais que lid n'est pas le meme dans ce cas oui(done)
 
 
 PREVIEW MODEL (done)

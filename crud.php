@@ -169,7 +169,7 @@ function readreview()
 
 
 
-//ADDPOST:
+                                            //ADDPOST:
 
 function addpost()
 {
@@ -266,14 +266,15 @@ function addpost()
                 'dossier' => $modelName . '_' . $userid,
                 'userid' => $userid
             ]);
-
-            echo "<p style='color:green;'>Upload terminé avec succès !</p>";
+            
+            echo "<p>Upload terminé avec succès !</p>";
             echo "<a href='index.php'>Retour</a>";
         } catch (PDOException $e) {
             echo "<p style='color:red;'>Erreur lors de l'enregistrement en base de données : " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     } else {
-        $debut = "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
+        echo  "<p style='color:red;'>Formulaire incomplet ou aucun fichier envoyé.</p>";
+        
     }
 }
 
@@ -405,11 +406,16 @@ function deleteaccount()
         rmdir($path);
     }
 
-    $stmt = $bdd->prepare('DELETE FROM post WHERE userid = :userid');
+    $stmt = $bdd->prepare('DELETE FROM favoris WHERE userid = :userid');
     $stmt->execute(['userid' => $id]);
 
-    // Supprimer d'abord les groupes
-    $stmt = $bdd->prepare('DELETE FROM `group` WHERE userid = :userid');
+    $stmt = $bdd->prepare('DELETE FROM review WHERE userid = :userid');
+    $stmt->execute(['userid' => $id]);
+
+    $stmt = $bdd->prepare('DELETE FROM sujet WHERE userid = :userid');
+    $stmt->execute(['userid' => $id]);
+
+    $stmt = $bdd->prepare('DELETE FROM post WHERE userid = :userid');
     $stmt->execute(['userid' => $id]);
 
     // Puis supprimer l'utilisateur

@@ -78,8 +78,12 @@ $posts = $get->fetchAll();
             <?php endforeach ?>
 
         </div>
-
+        
     </main>
+
+    <footer>
+        <a href="https://github.com/Fraxoo/blog">Lien du code github</a>
+    </footer>
 
 </body>
 
