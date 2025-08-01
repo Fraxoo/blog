@@ -164,7 +164,17 @@ footer p {
 }
 
 .behind{
-    background-color: #dee3e7;
+    background-color: #efefef;
+    border-radius: 10px;
+    display: flex;
+    gap: 8rem;
+    object-fit: contain;
+    flex-wrap: wrap;
+    
+}
+
+.behind2{
+    background-color: #dee3e7 ;
     border-radius: 10px;
     display: flex;
     gap: 8rem;

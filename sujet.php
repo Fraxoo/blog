@@ -12,6 +12,8 @@ addcomm();
 
 $sujetscomms = sujetcomm();
 
+
+
 $admin = changecouleur();
 
 var_dump($admin);
@@ -73,28 +75,39 @@ echo $_SESSION['id']
             </div>
 
             <div class="comm">
-            <?php foreach ($sujetscomms as $sujetscomm) : ?>
-
-                <div class="behind">
-                    <div class="auteur">
-                        <p>Poster par <?=$sujetscomm['pseudo']?></p>
-                        <?php if($sujetscomm['id'] == $_SESSION['id']):?>
-                            <a href="deletecom.php?id=<?=$sujetscomm['review_id']?>&sujet_id=<?= $_GET['id']?>">Supprimer</a>
-                        <?php endif ?>
-                    </div>
-
+                <?php foreach ($sujetscomms as $sujetscomm) : ?>
                     
-                    <div class="commentaire">
+                    <?php if ($sujetscomm['id'] != $_GET['ad']): ?>
+                        <div class="behind">
+                            <div class="auteur">
+                                <p>Poster par <?= $sujetscomm['pseudo'] ?></p>
+                                <?php if ($sujetscomm['id'] == $_SESSION['id']): ?>
+                                    <a href="deletecom.php?id=<?= $sujetscomm['review_id'] ?>&sujet_id=<?= $_GET['id'] ?>">Supprimer</a>
 
-                        <p>Poster le <?= $sujetscomm['date']?> a <?=$sujetscomm['heure']?></p>
-                        <p><?= $sujetscomm['commentaire']?></p>
-                         
-                    </div>
-                    
-                </div>
-            <?php endforeach ?>
-                    
-            </div>
+                                <?php endif ?>
+                            <?php else : ?>
+                                <div class="behind2">
+                                    <div class="auteur">
+                                        <p>Poster par <?= $sujetscomm['pseudo'] ?></p>
+                                        <?php if ($sujetscomm['id'] == $_SESSION['id']): ?>
+                                            <a href="deletecom.php?id=<?= $sujetscomm['review_id'] ?>&sujet_id=<?= $_GET['id'] ?>">Supprimer</a>
+
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    </div>
+
+
+                                    <div class="commentaire">
+
+                                        <p>Poster le <?= $sujetscomm['date'] ?> a <?= $sujetscomm['heure'] ?></p>
+                                        <p><?= $sujetscomm['commentaire'] ?></p>
+
+                                    </div>
+
+                                </div>
+                            <?php endforeach ?>
+
+                            </div>
         </main>
 
         <footer>

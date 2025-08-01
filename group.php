@@ -70,10 +70,9 @@ $sujets = sujetlist();
                 </div>
                 <div class="allsujet">
                     <?php foreach ($sujets as $sujet): ?>
-                        
                         <div class="sujet">  
                             <div class="nom">
-                                <a href="sujet.php?id=<?= $sujet['sujet_id'] ?>"><?= $sujet['nom'] ?></a>
+                                <a href="sujet.php?id=<?= $sujet['sujet_id'] ?>&ad=<?= $sujet['userid']?>"><?= $sujet['nom'] ?></a>
                             </div>
                             <div class="sujetright">
                                 <div class="reponses">
