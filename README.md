@@ -26,7 +26,7 @@ option pour modifier publication
 
 option pour supprimer publication (done)
 
-option pour supprimer un commentaire
+option pour supprimer un commentaire(done)
 
 
 option pour ajouter en favoris(done)
@@ -38,7 +38,7 @@ option pour laisser un commentaire (done)
 option changer adresse mail / mot de passe
 
 
-faire en sorte que si c'est ladmin de la discussion sont message sois d'une couleur differente
+faire en sorte que si c'est ladmin de la discussion sont message sois d'une couleur differente (done)
 
 
 

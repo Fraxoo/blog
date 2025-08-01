@@ -222,3 +222,102 @@ footer p {
     border: none;
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+.all{
+    margin: 0;
+  }
+    .hautdroite{
+    flex-direction: column-reverse;
+  }
+  .hautdroite button{
+    border: none;
+    background-color: #f2f2f2;
+    position: relative;
+    right: -7.3rem;
+    top: 4.6rem;
+    cursor: pointer;
+}
+.addsujet{
+    text-align: center;
+}
+
+.behind{
+    background-color: #264758;
+    border-radius: 10px;
+    padding: 1rem 0;
+}
+
+.topsujet{
+    display: none;
+    color: white;
+    padding: 0.2rem 0px 0.2rem 1rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    
+}
+
+.topsujetright{
+    display: none;
+    margin-right: 10rem;
+    gap: 0rem;
+    flex-wrap: wrap;
+}
+
+.sujet{
+    background-color: #dee3e7;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border: 1px #264758 solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+}
+
+.nom{
+    margin-left: 0rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.nom a{
+    text-decoration: none;
+    font-size: 1.2rem;
+    
+}
+
+.nom a:hover{
+    text-decoration: underline;
+    color: red;
+}
+
+.sujetright{
+    display: flex;
+    margin-right: 0rem;
+    border-left: 0;
+    flex-direction: column;
+    
+}
+
+
+.reponses{
+    width: 4rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    
+}
+
+.lastmess{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-left: 0rem;
+    border-left: 0;
+    margin-top: 0.5rem;
+}
+}

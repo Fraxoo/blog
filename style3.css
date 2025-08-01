@@ -97,11 +97,33 @@ main{
 
 button{
     font-size: 1.5rem;
-    background-color: white;
+    background-color: #3492a5;
     border: none;
-    padding: 0.5rem 2rem;
+    padding: 1rem 2rem;
     border-radius: 3rem;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
 }
 
+@media screen and (max-width: 600px) {
+
+h2{
+    text-align: center;
+
+}
+
+main{
+    margin-top: 3rem;
+}
+
+.info{
+    flex-direction: column;
+
+}
+
+
+
+}
 
 

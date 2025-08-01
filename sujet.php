@@ -12,13 +12,9 @@ addcomm();
 
 $sujetscomms = sujetcomm();
 
-
-
 $admin = changecouleur();
 
-var_dump($admin);
 
-echo $_SESSION['id']
 
 ?>
 

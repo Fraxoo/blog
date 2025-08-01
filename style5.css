@@ -85,6 +85,8 @@ a,p{
     padding: 1rem 3rem;
     border-radius: 3rem;
     margin: 2rem;
+    width: 50%;
+    text-align: center;
 }
 
 .post{
@@ -98,6 +100,12 @@ a,p{
     padding: 1rem 3rem;
     border-radius: 3rem;
     margin: 2rem;
+    width: 50%;
+    text-align: center;
 }
 
-
+@media screen and (max-width: 600px) {
+    .favoris,.model{
+        width: 90%;
+    }
+}
